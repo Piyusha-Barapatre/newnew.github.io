@@ -1,72 +1,36 @@
-<?php
-    /*
-    Construir la ruta a la cual va a ser redireccionado
-    en caso de colocar la password correcta o de darle click
-    a "Cancel"
-    */
-    $host = $_SERVER['HTTP_HOST'];
-    $ruta = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-    $url = "http://$host$ruta"; // ruta completa construida
-
-    // si el botón "Cancel fue presionado"
-if (isset($_POST["cancel"])) {
-    header("Location: $url/index.php");
-    die();
-}
-
-    /*
-    Verificar si todos los campos del formulario fueron llenados
-    para luego verificar si la contraseña escrita es la correcta
-    */
-    $message = false;
-if (isset($_POST["who"]) && isset($_POST["pass"])) {
-    $salt = 'XyZzy12*_';
-
-    // valor del md5 para comprobar la contraseña correcta
-    $stored_hash = '1a52e17fa899cf40fb04cfc42e6352f1';
-
-    // md5 is generado al concatenar $salt y "pass"
-    $md5 = hash("md5", $salt . $_POST["pass"]);
-
-    // si la contraseña es la correcta redirecciona a game.php
-    if ($md5 == $stored_hash) {
-        header("Location: $url/game.php?name=" . urlencode($_POST['who']));
-        die();
-    }
-    if (strlen($_POST["who"]) < 1 || strlen($_POST['pass']) < 1) {
-        $message = "User name and password are required";
-    } else {
-        $message = "Incorrect password";
-    }
-}
-?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Piyusha Barapatre 1da6a3b3</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Custom styles for this template -->
+<link href="starter-template.css" rel="stylesheet">
+
+<title>Chuck Severance's Login Page</title>
 </head>
-<body style="font-family: Helvetica">
-    <h1>
-        Please Log In
-    </h1>
-    <?php
-    if ($message !== false) {
-        echo('<p style="color: red;">'.htmlentities($message) . "</p>\n");
-    }
-    ?>
-    <form method="post">
-        <label>User name</label>
-        <input type="text" name="who" autocomplete="off">
-        <br>
-        <label>Password</label>
-        <input type="password" name="pass">
-        <br>
-        <input type="submit" name="login" value="Log In">
-        <input type="submit" name="cancel" value="Cancel">
-    </form>
-    <p>
-        If you don't know which password to use, check the code comments
-        <!-- Hint: The password is 'php123' -->
-    </p>
+<body>
+<div class="container">
+<h1>Please Log In</h1>
+<form method="POST">
+<label for="nam">User Name</label>
+<input type="text" name="who" id="nam"><br/>
+<label for="id_1723">Password</label>
+<input type="text" name="pass" id="id_1723"><br/>
+<input type="submit" value="Log In">
+<input type="submit" name="cancel" value="Cancel">
+</form>
+<p>
+For a password hint, view source and find a password hint
+in the HTML comments.
+<!-- Hint: The password is the three character name of the 
+programming language used in this class (all lower case) 
+followed by 123. -->
+</p>
+</div>
 </body>
-</html>
+
